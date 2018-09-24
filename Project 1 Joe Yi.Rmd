@@ -5,16 +5,12 @@ date: "September 24, 2018"
 output: html_document
 ---
 
+Dataset 1: ChickenWeight
+
 ```{r}
----
-title: "Project 1"
-author: "Joe Yi"
-date: "September 24, 2018"
-output: html_document
----
 
 library(tidyverse)
-
+library(dplyr)
 data()
 
 ?ChickWeight
@@ -39,6 +35,10 @@ ggplot(data = ChickWeight) +
 These figures are created from the ChickWeight dataset in R datasets' package originally from Crowder's Analysis of Repeated Measures. It is a dataset of 50 chicks which are weighed every other day from birth til 20 days and an additional measurement at day 21. Each chick is given a different protein diet. I chose this dataset to showcase some elementary plots and calculations with relatively tame data. By subsetting the data by the time, we can calculate the average weight at day 0 which was 41.06. Additionally, the average weight for a chick that survived till day 20 is 209.7. Using our friendly boxplot, we can see the differences amongst each diet. Diet 1 looks to be the best diet for thinner chicks while diet 3 and 4 would be the go-to diet to maximize weight. This type of analysis can be used by the food industry to maximize their chicken meat production through the choice of diet.
 
 Further research can look at the growth past day 21 and try to model this growth.
+
+
+Dataset 2: airquality
+
 
 ```{r}
 ?airquality
@@ -67,6 +67,10 @@ ozone %>%
 
 These figures are derived from the New York State Department of Conservation and the National Weather Service. It contains the daily readings of ozone, solar radiation, wind and temperature from May 1, 1973 to September 30, 1973. The highest average ozone is in the month of August with 59.96 ppb with July not far off at 59.1 The best air quality from this dataset is in May with an average of 23.6 ppb. Judging from personal anecdote, I believe the rise in air pollutants may have to do with the use of air conditioning units in the city during the Summer. If possible, in future studies, it would be interesting to see the changes in ozone throughout the entire year if not additional years.
 
+
+Dataset 3: Orange
+
+
 ```{r}
 ?Orange
 
@@ -77,7 +81,11 @@ ggplot(data = Orange, mapping = aes(x = age, y = circumference, group = Tree, co
   xlab("Days") +
   ylab("Circumference in mm")
 
-
-
+omax <- Orange%>% 
+  group_by(Tree) %>% 
+  mutate(max = max(circumference))
+glimpse(omax)
 ```
+
+The Orange dataset comes from Draper's Applied Regression Analysis exercise. It follows the growth of 5 orange trees from 12/31/1968. After a couple hundred days, measurements of the circumference of the 5 trees are taken. The trees are labeled in order of increasing diameter. Tree 1 has a max of 145 mm of trunk which was observed at day 1582. Tree 4 has a max of 214 mm of trunk which was observed at day 1582. There is not much of a reason to choose this dataset besides its easy analysis and ease of communicating the fact same species trees grow at different rates. Additional studies into this topic may include using additional fruit trees to see the differences in growth.
 
