@@ -1,0 +1,83 @@
+---
+title: "Project 1"
+author: "Joe Yi"
+date: "September 24, 2018"
+output: html_document
+---
+
+```{r}
+---
+title: "Project 1"
+author: "Joe Yi"
+date: "September 24, 2018"
+output: html_document
+---
+
+library(tidyverse)
+
+data()
+
+?ChickWeight
+
+ggplot(data = ChickWeight, mapping = aes(x = Time, y = weight, color = Diet, group = Chick)) +
+  geom_line() +
+  labs(title = "Chick Growth over 20 Days") +
+  xlab("Days") +
+  ylab("Weight in grams")
+
+#
+adultchick <- ChickWeight %>% 
+  filter(Time == 20) %>% 
+  mutate(avgwt = mean(weight))
+
+ggplot(data = ChickWeight) + 
+  geom_boxplot(mapping = aes(x = Diet, y= weight))
+
+
+```
+
+These figures are created from the ChickWeight dataset in R datasets' package originally from Crowder's Analysis of Repeated Measures. It is a dataset of 50 chicks which are weighed every other day from birth til 20 days and an additional measurement at day 21. Each chick is given a different protein diet. I chose this dataset to showcase some elementary plots and calculations with relatively tame data. By subsetting the data by the time, we can calculate the average weight at day 0 which was 41.06. Additionally, the average weight for a chick that survived till day 20 is 209.7. Using our friendly boxplot, we can see the differences amongst each diet. Diet 1 looks to be the best diet for thinner chicks while diet 3 and 4 would be the go-to diet to maximize weight. This type of analysis can be used by the food industry to maximize their chicken meat production through the choice of diet.
+
+Further research can look at the growth past day 21 and try to model this growth.
+
+```{r}
+?airquality
+airquality
+
+#Create the days variable which converts Month & Day to just Days after May 1
+ozone <- airquality %>% 
+  mutate(days = (Month * 30 + Day)-150)
+         
+         
+#Plot for the ozone over time
+ggplot(data = ozone, mapping = aes(x = days, y = Ozone)) +
+  geom_line() +
+  labs(title = "New York Ozone starting in May 1973") +
+  xlab("Days") +
+  ylab("Ozone (ppb)") +
+  scale_x_continuous(breaks = seq(0, 150, by = 10))
+
+#Calculate Means per Month
+ozone %>% 
+  group_by(Month) %>% 
+  filter(!is.na(Ozone)) %>% 
+  summarise(mean = mean(Ozone))
+  
+```
+
+These figures are derived from the New York State Department of Conservation and the National Weather Service. It contains the daily readings of ozone, solar radiation, wind and temperature from May 1, 1973 to September 30, 1973. The highest average ozone is in the month of August with 59.96 ppb with July not far off at 59.1 The best air quality from this dataset is in May with an average of 23.6 ppb. Judging from personal anecdote, I believe the rise in air pollutants may have to do with the use of air conditioning units in the city during the Summer. If possible, in future studies, it would be interesting to see the changes in ozone throughout the entire year if not additional years.
+
+```{r}
+?Orange
+
+#Linear Model for Orange Tree growth
+ggplot(data = Orange, mapping = aes(x = age, y = circumference, group = Tree, color = Tree)) +
+  geom_smooth() +
+  labs(title = "Tree Growth since 12/31/1968 ") +
+  xlab("Days") +
+  ylab("Circumference in mm")
+
+
+
+```
+
